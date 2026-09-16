@@ -160,6 +160,7 @@ class Sigmoid(ScalarFunction):
         s = operators.sigmoid(a)
         return d_output * s * (1.0 - s)
 
+
 class ReLU(ScalarFunction):
     "ReLU function"
 
