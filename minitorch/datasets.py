@@ -21,6 +21,15 @@ class Graph:
 
 
 def simple(N: int) -> Graph:
+    """
+    The dataset is a set of points in the unit square, with label 1 if the first coordinate is less than 0.5, and 0 otherwise.
+    
+    Args:
+        N: Number of points to generate.
+    
+    Returns:
+        A Graph object containing the generated dataset.
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -30,6 +39,15 @@ def simple(N: int) -> Graph:
 
 
 def diag(N: int) -> Graph:
+    """
+    The dataset is a set of points in the unit square, with label 1 if the sum of the coordinates is less than 0.5, and 0 otherwise.
+    
+    Args:
+        N: Number of points to generate.
+    
+    Returns:
+        A Graph object containing the generated dataset.
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -39,6 +57,15 @@ def diag(N: int) -> Graph:
 
 
 def split(N: int) -> Graph:
+    """
+    The dataset is a set of points in the unit square, with label 1 if the first coordinate is less than 0.2 or greater than 0.8, and 0 otherwise.
+    
+    Args:
+        N: Number of points to generate.
+    
+    Returns:
+        A Graph object containing the generated dataset.
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -48,6 +75,15 @@ def split(N: int) -> Graph:
 
 
 def xor(N: int) -> Graph:
+    """
+    The dataset is a set of points in the unit square, with label 1 if the first coordinate is less than 0.5 and the second is greater than 0.5, or vice versa, and 0 otherwise.
+
+    Args:
+        N: Number of points to generate.
+
+    Returns:
+        A Graph object containing the generated dataset.
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -57,6 +93,15 @@ def xor(N: int) -> Graph:
 
 
 def circle(N: int) -> Graph:
+    """
+    The dataset is a set of points in the unit square, with label 1 if the point is outside a circle of radius sqrt(0.1) centered at (0.5, 0.5), and 0 otherwise.
+    
+    Args:
+        N: Number of points to generate.
+        
+    Returns:
+        A Graph object containing the generated dataset.
+    """
     X = make_pts(N)
     y = []
     for x_1, x_2 in X:
@@ -67,6 +112,15 @@ def circle(N: int) -> Graph:
 
 
 def spiral(N: int) -> Graph:
+    """
+    The dataset is a set of points in the unit square, with label 1 if the point is in one spiral arm, and 0 if it is in the other spiral arm.
+    
+    Args:
+        N: Number of points to generate.
+    
+    Returns:
+        A Graph object containing the generated dataset.
+    """
     def x(t: float) -> float:
         return t * math.cos(t) / 20.0
 

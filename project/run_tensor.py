@@ -3,6 +3,10 @@ Be sure you have minitorch installed in you Virtual Env.
 >>> pip install -Ue .
 """
 
+import os
+import random
+import time
+
 import minitorch
 
 
@@ -53,6 +57,7 @@ class TensorTrain:
     def __init__(self, hidden_layers):
         self.hidden_layers = hidden_layers
         self.model = Network(hidden_layers)
+        self.time_per_epoch = 0.0
 
     def run_one(self, x):
         return self.model.forward(minitorch.tensor([x]))
@@ -71,6 +76,7 @@ class TensorTrain:
         y = minitorch.tensor(data.y)
 
         losses = []
+        start_time = time.perf_counter()
         for epoch in range(1, self.max_epochs + 1):
             total_loss = 0.0
             correct = 0
@@ -92,12 +98,24 @@ class TensorTrain:
             if epoch % 10 == 0 or epoch == max_epochs:
                 y2 = minitorch.tensor(data.y)
                 correct = int(((out.detach() > 0.5) == y2).sum()[0])
+                self.time_per_epoch = (time.perf_counter() - start_time) / epoch
                 log_fn(epoch, total_loss, correct, losses)
+
+        print(f"Average time per epoch: {self.time_per_epoch:.6f}s")
 
 
 if __name__ == "__main__":
-    PTS = 50
-    HIDDEN = 2
-    RATE = 0.5
-    data = minitorch.datasets["Simple"](PTS)
-    TensorTrain(HIDDEN).train(data, RATE)
+    SEED = int(os.environ.get("SEED", "3"))
+    PTS = int(os.environ.get("PTS", "50"))
+    DATASET = os.environ.get("DATASET", "Simple")
+    HIDDEN = int(os.environ.get("HIDDEN", "2"))
+    RATE = float(os.environ.get("RATE", "0.5"))
+    EPOCHS = int(os.environ.get("EPOCHS", "500"))
+
+    random.seed(SEED)
+    print(
+        f"Config: DATASET={DATASET}, PTS={PTS}, HIDDEN={HIDDEN}, "
+        f"RATE={RATE}, EPOCHS={EPOCHS}, SEED={SEED}"
+    )
+    data = minitorch.datasets[DATASET](PTS)
+    TensorTrain(HIDDEN).train(data, RATE, EPOCHS)
